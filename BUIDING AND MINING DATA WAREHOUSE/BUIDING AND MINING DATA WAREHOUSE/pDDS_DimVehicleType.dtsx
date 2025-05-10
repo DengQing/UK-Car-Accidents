@@ -1,0 +1,994 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/4/2022 9:14:09 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-0IA21OI"
+  DTS:CreatorName="DESKTOP-0IA21OI\NhatTan"
+  DTS:DTSID="{A5333953-7C5C-4A3F-A937-BFB6A20FDB63}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="pDDS_DimVehicleType"
+  DTS:PackageType="5"
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{1EF2BD3B-07A6-4F2A-8CFB-30BA9AE1B0AA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2EEDD9C7-CBCF-48F9-A878-94B80ED6AB1D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CETResult">
+      <DTS:VariableValue
+        DTS:DataType="8">1/1/1900</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AB0357FE-7C31-4FD8-8941-02BEBDB9CFE9}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="LSETResult">
+      <DTS:VariableValue
+        DTS:DataType="8">1/1/1900</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get LSET_CET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{02B27B66-10C9-4FBA-82B0-AB3605923D28}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get LSET_CET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{DE3C34A7-7A0C-4B26-A05E-3060463C0629}"
+          SQLTask:SqlStatementSource="EXEC dbo.GET_CET_LSET 'DDS_VehicleType'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="CET"
+            SQLTask:DtsVariableName="User::CETResult" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LSET"
+            SQLTask:DtsVariableName="User::LSETResult" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populating data"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{FAFD66D1-BB21-43F7-A619-4336A8F651D6}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populating data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Populating data\Insert Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Insert Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DimVehicleType]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\Insert Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{FE586EEE-F8D2-4B75-A592-FFE0324433A8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DDS_DATH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].Columns[VehicleType_ID]"
+                      cachedDataType="i4"
+                      cachedName="VehicleType_ID"
+                      externalMetadataColumnId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[VehicleNK]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[VehicleType_ID]" />
+                    <inputColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].Columns[Label]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Label"
+                      externalMetadataColumnId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[VehicleTypeName]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Label]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[VehicleKey]"
+                      dataType="i4"
+                      name="VehicleKey" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[VehicleNK]"
+                      dataType="i4"
+                      name="VehicleNK" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[VehicleTypeName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="VehicleTypeName" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\OLE DB Command"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="OLE DB Command"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE [dbo].[DimVehicleType] SET [VehicleTypeName] = ? WHERE [VehicleNK] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\OLE DB Command.Connections[OleDbConnection]"
+                  connectionManagerID="{FE586EEE-F8D2-4B75-A592-FFE0324433A8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DDS_DATH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].Columns[VehicleType_ID]"
+                      cachedDataType="i4"
+                      cachedName="VehicleType_ID"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[VehicleType_ID]" />
+                    <inputColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].Columns[Label]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Label"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Label]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="i4"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Vehicle]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT *
+FROM   VehicleType
+WHERE ((Create_time &gt;= ?) AND (Create_time &lt;= ?)) OR
+             ((Update_time &gt;= ?) AND (Update_time &lt;= ?))</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{AB0357FE-7C31-4FD8-8941-02BEBDB9CFE9};"Parameter1:Input",{2EEDD9C7-CBCF-48F9-A878-94B80ED6AB1D};"Parameter2:Input",{AB0357FE-7C31-4FD8-8941-02BEBDB9CFE9};"Parameter3:Input",{2EEDD9C7-CBCF-48F9-A878-94B80ED6AB1D};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{AE006570-A2B7-40E0-9892-4B549EA30919}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.NDS_DATH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[VehicleType_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[VehicleType_ID]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[VehicleType_ID]"
+                      name="VehicleType_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Code_NK]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Code_NK]"
+                      length="50"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Code_NK]"
+                      name="Code_NK"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Label]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Label]"
+                      length="50"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Label]"
+                      name="Label"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Create_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Create_time]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Create_time]"
+                      name="Create_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Update_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Update_time]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Update_time]"
+                      name="Update_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Source_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Source_ID]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Source_ID]"
+                      name="Source_ID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[VehicleType_ID]"
+                      dataType="i4"
+                      name="VehicleType_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Code_NK]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Code_NK" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Label]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Label" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Create_time]"
+                      dataType="dbTimeStamp"
+                      name="Create_time" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Update_time]"
+                      dataType="dbTimeStamp"
+                      name="Update_time" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Source_ID]"
+                      dataType="i4"
+                      name="Source_ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[VehicleType_ID]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[VehicleType_ID]"
+                      name="VehicleType_ID" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Code_NK]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Code_NK]"
+                      name="Code_NK" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Label]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Label]"
+                      name="Label" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Create_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Create_time]"
+                      name="Create_time" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Update_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Update_time]"
+                      name="Update_time" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Source_ID]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Source_ID]"
+                      name="Source_ID" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\Slowly Changing Dimension"
+              componentClassID="Microsoft.SCD"
+              contactInfo="Slowly Changing Dimension;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Updates a SQL Server Analysis Services data warehouse dimension. Update dimension records that are already present and  insert dimension records that aren't. For example, update the DimProduct table of the AdventureWorksDW OLAP database with data from the Products table in the AdventureWorks OLTP database."
+              name="Slowly Changing Dimension"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SELECT statement used to create a schema rowset."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [VehicleNK], [VehicleTypeName] FROM [dbo].[DimVehicleType]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the WHERE clause in the SELECT statement that selects the current row among rows with identical business keys."
+                  name="CurrentRowWhere"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether historical attribute updates are directed to the transformation output for changing attribute updates."
+                  name="UpdateChangingAttributeHistory">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when columns with fixed attributes contain changes."
+                  name="FailOnFixedAttributeChange">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the column name for the inferred member."
+                  name="InferredMemberIndicator"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether inferred member updates are detected."
+                  name="EnableInferredMember">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when a lookup of an existing record fails."
+                  name="FailOnLookupFailure">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies that all rows in the input are new or the transformation detects the change type."
+                  name="IncomingRowChangeType"
+                  typeConverter="IncomingRowChangeType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\Slowly Changing Dimension.Connections[LookupConnection]"
+                  connectionManagerID="{FE586EEE-F8D2-4B75-A592-FFE0324433A8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DDS_DATH]"
+                  description="Defines the connection to use for lookups in the dimension table"
+                  name="LookupConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+                  name="Slowly Changing Dimension Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[VehicleType_ID]"
+                      cachedDataType="i4"
+                      cachedName="VehicleType_ID"
+                      externalMetadataColumnId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[VehicleNK]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[VehicleType_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[Label]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Label"
+                      externalMetadataColumnId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[VehicleTypeName]"
+                      lineageId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Label]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">2</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[VehicleNK]"
+                      dataType="i4"
+                      name="VehicleNK" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[VehicleTypeName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="VehicleTypeName" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Unchanged Output]"
+                  description="Unchanged rows"
+                  exclusionGroup="1"
+                  name="Unchanged Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[New Output]"
+                  description="New rows"
+                  exclusionGroup="1"
+                  name="New Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Fixed Attribute Output]"
+                  description="Rows with changes in columns tagged FixedAttribute"
+                  exclusionGroup="1"
+                  name="Fixed Attribute Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Changing Attribute Updates Output]"
+                  description="These rows contain new information for ChangingAttribute (Type 1) column changes"
+                  exclusionGroup="1"
+                  name="Changing Attribute Updates Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Historical Attribute Inserts Output]"
+                  description="HistoricalAttribute (Type 2) changes result in these new rows"
+                  exclusionGroup="2"
+                  name="Historical Attribute Inserts Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Inferred Member Updates Output]"
+                  description="Information to update unpopulated initial dimension row"
+                  exclusionGroup="1"
+                  name="Inferred Member Updates Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Populating data.Paths[Changing Attribute Updates Output]"
+              endId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input]"
+              name="Changing Attribute Updates Output"
+              startId="Package\Populating data\Slowly Changing Dimension.Outputs[Changing Attribute Updates Output]" />
+            <path
+              refId="Package\Populating data.Paths[New Output]"
+              endId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input]"
+              name="New Output"
+              startId="Package\Populating data\Slowly Changing Dimension.Outputs[New Output]" />
+            <path
+              refId="Package\Populating data.Paths[OLE DB Source Output]"
+              endId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+              name="OLE DB Source Output"
+              startId="Package\Populating data\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update LSET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{107EE1A6-9ABD-4291-8010-617287449145}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update LSET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{DE3C34A7-7A0C-4B26-A05E-3060463C0629}"
+          SQLTask:SqlStatementSource="UPDATE dbo.Data_Flow&#xA;SET LSET = CET&#xA;WHERE Name = 'DDS_VehicleType'&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D52E977B-BCDE-4D9B-9E27-C9B1AE241B91}"
+      DTS:From="Package\Get LSET_CET"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Populating data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{36F8DF41-26E5-4937-9656-F3C192449E79}"
+      DTS:From="Package\Populating data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update LSET" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Get LSET_CET"
+          TopLeft="63.749999050051,98.1499982449413" />
+        <NodeLayout
+          Size="153.333333333334,42.6666666666667"
+          Id="Package\Populating data"
+          TopLeft="267.499996013939,93.5999983263016" />
+        <NodeLayout
+          Size="140,42.6666666666667"
+          Id="Package\Update LSET"
+          TopLeft="277.499995864928,191.099996582866" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="210.416665716718,117.208331618955">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="57.0833302972218,0"
+              Start="0,0"
+              End="49.5833302972218,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="49.5833302972218,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="345.833329272767,136.266664992968">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.8333315898976"
+              Start="0,0"
+              End="0,47.3333315898976">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.3333315898976" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Populating data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Populating data\OLE DB Source"
+          TopLeft="238.166666666667,5.50000000000004" />
+        <NodeLayout
+          Size="209.333333333334,42.6666666666667"
+          Id="Package\Populating data\Slowly Changing Dimension"
+          TopLeft="208.833333333333,108.166666666667" />
+        <EdgeLayout
+          Id="Package\Populating data.Paths[OLE DB Source Output]"
+          TopLeft="313.5,48.1666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="164,42.6666666666667"
+          Id="Package\Populating data\Insert Destination"
+          TopLeft="5.50000000000006,210.833333333334" />
+        <EdgeLayout
+          Id="Package\Populating data.Paths[New Output]"
+          TopLeft="279.944444444444,150.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-192.444444444444,60.0000000000001"
+              Start="0,0"
+              End="-192.444444444444,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2730720606827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2730720606827"
+                    Point2="0,24.2730720606827"
+                    Point3="-4,24.2730720606827" />
+                  <mssgle:LineSegment
+                    End="-188.444444444444,24.2730720606827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-188.444444444444,24.2730720606827"
+                    Point2="-192.444444444444,24.2730720606827"
+                    Point3="-192.444444444444,28.2730720606827" />
+                  <mssgle:LineSegment
+                    End="-192.444444444444,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-123.313608940972,29.2730720606827,54.1827734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="166.666666666667,42.6666666666667"
+          Id="Package\Populating data\OLE DB Command"
+          TopLeft="230.166666666667,210.833333333334" />
+        <EdgeLayout
+          Id="Package\Populating data.Paths[Changing Attribute Updates Output]"
+          TopLeft="347.055555555556,150.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-33.5555555555555,60.0000000000001"
+              Start="0,0"
+              End="-33.5555555555555,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2730720606827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2730720606827"
+                    Point2="0,24.2730720606827"
+                    Point3="-4,24.2730720606827" />
+                  <mssgle:LineSegment
+                    End="-29.5555555555555,24.2730720606827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-29.5555555555555,24.2730720606827"
+                    Point2="-33.5555555555555,24.2730720606827"
+                    Point3="-33.5555555555555,28.2730720606827" />
+                  <mssgle:LineSegment
+                    End="-33.5555555555555,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-95.3116840277778,29.2730720606827,157.0678125,11.6630859375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Populating data\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Populating data\Slowly Changing Dimension">
+    <Properties>
+      <Property>
+        <Name>SCDMetadata</Name>
+        <Value
+          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SCDWizardMetadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionID&gt;{FE586EEE-F8D2-4B75-A592-FFE0324433A8}&lt;/ConnectionID&gt;
+  &lt;TableName&gt;[dbo].[DimVehicleType]&lt;/TableName&gt;
+  &lt;InputToColumnsCollection&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[VehicleType_ID]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;VehicleNK&lt;/ColumnName&gt;
+      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[Label]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;VehicleTypeName&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+  &lt;/InputToColumnsCollection&gt;
+  &lt;GeneratedComponentsIdentificationStrings&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
+  &lt;/GeneratedComponentsIdentificationStrings&gt;
+  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
+  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
+  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
+  &lt;CurrentIndicatorColumn /&gt;
+  &lt;InferredIndicatorColumn /&gt;
+  &lt;ValueCurrent /&gt;
+  &lt;ValueExpired /&gt;
+  &lt;StartDateColumn /&gt;
+  &lt;EndDateColumn /&gt;
+  &lt;DateVariable /&gt;
+  &lt;EnableInferredSupport&gt;false&lt;/EnableInferredSupport&gt;
+&lt;/SCDWizardMetadata&gt;</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

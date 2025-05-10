@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LocalHost.Stage_DATH 1"
+  DTS:DTSID="{68B744B6-BFA4-417D-AA11-2C26D08D51D7}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=.;Initial Catalog=Stage_DATH;Integrated Security=True;Application Name=&quot;SSIS-BUIDING AND MINING DATA WAREHOUSE-{68B744B6-BFA4-417D-AA11-2C26D08D51D7}LocalHost.Stage_DATH&quot;;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

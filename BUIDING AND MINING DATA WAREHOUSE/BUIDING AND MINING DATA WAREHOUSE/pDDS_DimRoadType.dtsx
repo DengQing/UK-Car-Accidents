@@ -1,0 +1,1900 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/4/2022 8:19:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PDH372"
+  DTS:CreatorName="PDH372\phamd"
+  DTS:DTSID="{FC784BAB-2CDA-4B4E-953A-D20179921DE1}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="pDDS_DimRoadType"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{46135BA5-B858-4B09-86D0-8F09DD257DB2}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9F5CB6B9-7EFF-4A31-B3ED-837D71A42BF7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CET">
+      <DTS:VariableValue
+        DTS:DataType="8">'1/1/1900'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{087E2EC0-FDD5-4CBD-85A7-5BCFEA220408}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="LSET">
+      <DTS:VariableValue
+        DTS:DataType="8">'1/1/1900'</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get LSET_CET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E78F88C0-4E61-41FC-8E98-DFD54DA976FC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get LSET_CET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{DE3C34A7-7A0C-4B26-A05E-3060463C0629}"
+          SQLTask:SqlStatementSource="EXEC dbo.GET_CET_LSET 'DDS_RoadType'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="CET"
+            SQLTask:DtsVariableName="User::CET" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LSET"
+            SQLTask:DtsVariableName="User::LSET" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populating data"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F91D875F-E85C-403A-B3C2-148DC9DC26C5}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populating data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Populating data\delete duplicate"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="delete duplicate"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Populating data\delete duplicate.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\delete duplicate.Inputs[Sort Input].Columns[Build_Up_Road]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Build_Up_Road"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[Build_Up_Road]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\delete duplicate.Inputs[Sort Input].Columns[SpeedLimit]"
+                      cachedDataType="i4"
+                      cachedName="SpeedLimit"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[SpeedLimit]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\delete duplicate.Inputs[Sort Input].Columns[RoadType]"
+                      cachedDataType="i4"
+                      cachedName="RoadType"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[RoadType]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\delete duplicate.Inputs[Sort Input].Columns[AreaID]"
+                      cachedDataType="i4"
+                      cachedName="AreaID"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[AreaID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\delete duplicate.Inputs[Sort Input].Columns[RoadTypeName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="RoadTypeName"
+                      lineageId="Package\Populating data\get road type name.Outputs[Lookup Match Output].Columns[RoadTypeName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">4</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\delete duplicate.Inputs[Sort Input].Columns[AreaName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="AreaName"
+                      lineageId="Package\Populating data\get area name.Outputs[Lookup Match Output].Columns[AreaName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">3</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\delete duplicate.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[Build_Up_Road]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[Build_Up_Road]"
+                      name="Build_Up_Road"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[Build_Up_Road]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[SpeedLimit]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[SpeedLimit]"
+                      name="SpeedLimit"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[SpeedLimit]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadType]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadType]"
+                      name="RoadType">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[RoadType]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[AreaID]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[AreaID]"
+                      name="AreaID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[AreaID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadTypeName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadTypeName]"
+                      name="RoadTypeName"
+                      sortKeyPosition="4">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Populating data\get road type name.Outputs[Lookup Match Output].Columns[RoadTypeName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[AreaName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[AreaName]"
+                      name="AreaName"
+                      sortKeyPosition="3">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Populating data\get area name.Outputs[Lookup Match Output].Columns[AreaName]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\get area name"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="get area name"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Area]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Area]) [refTable]
+where [refTable].[Area_ID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Area_ID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CODE_NK" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="LABEL" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Source_ID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Create_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Update_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[AreaID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\get area name.Connections[OleDbConnection]"
+                  connectionManagerID="{AE006570-A2B7-40E0-9892-4B549EA30919}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.NDS_DATH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populating data\get area name.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\get area name.Inputs[Lookup Input].Columns[AreaID]"
+                      cachedDataType="i4"
+                      cachedName="AreaID"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[AreaID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Area_ID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\get area name.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Populating data\get area name.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\get area name.Outputs[Lookup Match Output].Columns[AreaName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Copy Column"
+                      length="50"
+                      lineageId="Package\Populating data\get area name.Outputs[Lookup Match Output].Columns[AreaName]"
+                      name="AreaName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">LABEL</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\get area name.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Populating data\get area name.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\get area name.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Populating data\get area name.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\get area name.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\get area name.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populating data\get area name.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\get area name.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\get road type name"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="get road type name"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[RoadType]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[RoadType]) [refTable]
+where [refTable].[RoadType_ID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="RoadType_ID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Code_NK" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Label" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Create_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Update_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Source_ID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[RoadType]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\get road type name.Connections[OleDbConnection]"
+                  connectionManagerID="{AE006570-A2B7-40E0-9892-4B549EA30919}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.NDS_DATH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populating data\get road type name.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\get road type name.Inputs[Lookup Input].Columns[RoadType]"
+                      cachedDataType="i4"
+                      cachedName="RoadType"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[RoadType]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">RoadType_ID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\get road type name.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Populating data\get road type name.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\get road type name.Outputs[Lookup Match Output].Columns[RoadTypeName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Copy Column"
+                      length="50"
+                      lineageId="Package\Populating data\get road type name.Outputs[Lookup Match Output].Columns[RoadTypeName]"
+                      name="RoadTypeName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Label</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\get road type name.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Populating data\get road type name.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\get road type name.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Populating data\get road type name.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\get road type name.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\get road type name.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populating data\get road type name.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\get road type name.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\Insert Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Insert Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DimRoadType]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\Insert Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{FE586EEE-F8D2-4B75-A592-FFE0324433A8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DDS_DATH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].Columns[RoadType]"
+                      cachedDataType="i4"
+                      cachedName="RoadType"
+                      externalMetadataColumnId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[RoadTypeNK]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadType]" />
+                    <inputColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].Columns[AreaName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="AreaName"
+                      cachedSortKeyPosition="3"
+                      externalMetadataColumnId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[AreaType]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[AreaName]" />
+                    <inputColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].Columns[RoadTypeName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="RoadTypeName"
+                      cachedSortKeyPosition="4"
+                      externalMetadataColumnId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[RoadType]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadTypeName]" />
+                    <inputColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].Columns[SpeedLimit]"
+                      cachedDataType="i4"
+                      cachedName="SpeedLimit"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpeedLimit]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[SpeedLimit]" />
+                    <inputColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].Columns[Build_Up_Road]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Build_Up_Road"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[BuiltUpRoad]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[Build_Up_Road]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[RoadTypeKey]"
+                      dataType="i4"
+                      name="RoadTypeKey" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[RoadTypeNK]"
+                      dataType="i4"
+                      name="RoadTypeNK" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[AreaType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AreaType" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[RoadType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="RoadType" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpeedLimit]"
+                      dataType="i4"
+                      name="SpeedLimit" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[BuiltUpRoad]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="BuiltUpRoad" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\NDS Accidents"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="NDS Accidents"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Vehicle]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM dbo.Accidents
+WHERE ((Create_time &gt;= ?) AND (Create_time &lt;= ?)) OR
+             ((Update_time &gt;= ?) AND (Update_time &lt;= ?))</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{087E2EC0-FDD5-4CBD-85A7-5BCFEA220408};"Parameter1:Input",{9F5CB6B9-7EFF-4A31-B3ED-837D71A42BF7};"Parameter2:Input",{087E2EC0-FDD5-4CBD-85A7-5BCFEA220408};"Parameter3:Input",{9F5CB6B9-7EFF-4A31-B3ED-837D71A42BF7};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\NDS Accidents.Connections[OleDbConnection]"
+                  connectionManagerID="{AE006570-A2B7-40E0-9892-4B549EA30919}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.NDS_DATH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[Build_Up_Road]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Build_Up_Road]"
+                      length="50"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[Build_Up_Road]"
+                      name="Build_Up_Road"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[SpeedLimit]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[SpeedLimit]"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[SpeedLimit]"
+                      name="SpeedLimit"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[RoadType]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[RoadType]"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[RoadType]"
+                      name="RoadType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[AreaID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[AreaID]"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].Columns[AreaID]"
+                      name="AreaID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Create_time]"
+                      dataType="dbTimeStamp"
+                      name="Create_time" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Update_time]"
+                      dataType="dbTimeStamp"
+                      name="Update_time" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Source_ID]"
+                      dataType="i4"
+                      name="Source_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Accident_ID]"
+                      dataType="i4"
+                      name="Accident_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Accident_NK]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Accident_NK" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Accident_Easting]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Accident_Easting" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Accident_Northing]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Accident_Northing" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Accident_Longtitude]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Accident_Longtitude" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Accident_Latitude]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Accident_Latitude" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Accident_Severity]"
+                      dataType="i4"
+                      name="Accident_Severity" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Date]"
+                      dataType="dbDate"
+                      name="Date" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Time]"
+                      dataType="dbTime2"
+                      name="Time"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Local_Authority]"
+                      dataType="i4"
+                      name="Local_Authority" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[RoadType]"
+                      dataType="i4"
+                      name="RoadType" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[SpeedLimit]"
+                      dataType="i4"
+                      name="SpeedLimit" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Build_Up_Road]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Build_Up_Road" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Postcode_ID]"
+                      dataType="i4"
+                      name="Postcode_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Police_ID]"
+                      dataType="i4"
+                      name="Police_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[NumberOfCasualties]"
+                      dataType="i4"
+                      name="NumberOfCasualties" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[AreaID]"
+                      dataType="i4"
+                      name="AreaID" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output].ExternalColumns[Number_Of_Casualties]"
+                      dataType="i4"
+                      name="Number_Of_Casualties" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[Build_Up_Road]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[Build_Up_Road]"
+                      name="Build_Up_Road" />
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[SpeedLimit]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[SpeedLimit]"
+                      name="SpeedLimit" />
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[RoadType]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[RoadType]"
+                      name="RoadType" />
+                    <outputColumn
+                      refId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[AreaID]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Error Output].Columns[AreaID]"
+                      name="AreaID" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\OLE DB Command"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="OLE DB Command"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE [dbo].[DimRoadType] SET [AreaType] = ?,[BuiltUpRoad] = ?,[RoadType] = ?,[SpeedLimit] = ? WHERE [RoadTypeNK] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\OLE DB Command.Connections[OleDbConnection]"
+                  connectionManagerID="{FE586EEE-F8D2-4B75-A592-FFE0324433A8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DDS_DATH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].Columns[AreaName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="AreaName"
+                      cachedSortKeyPosition="3"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[AreaName]" />
+                    <inputColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].Columns[Build_Up_Road]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Build_Up_Road"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[Build_Up_Road]" />
+                    <inputColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].Columns[RoadTypeName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="RoadTypeName"
+                      cachedSortKeyPosition="4"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadTypeName]" />
+                    <inputColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].Columns[RoadType]"
+                      cachedDataType="i4"
+                      cachedName="RoadType"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadType]" />
+                    <inputColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].Columns[SpeedLimit]"
+                      cachedDataType="i4"
+                      cachedName="SpeedLimit"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[SpeedLimit]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="i4"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      dataType="i4"
+                      name="Param_4">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populating data\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populating data\Slowly Changing Dimension"
+              componentClassID="Microsoft.SCD"
+              contactInfo="Slowly Changing Dimension;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Updates a SQL Server Analysis Services data warehouse dimension. Update dimension records that are already present and  insert dimension records that aren't. For example, update the DimProduct table of the AdventureWorksDW OLAP database with data from the Products table in the AdventureWorks OLTP database."
+              name="Slowly Changing Dimension"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SELECT statement used to create a schema rowset."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [AreaType], [BuiltUpRoad], [RoadType], [RoadTypeNK], [SpeedLimit] FROM [dbo].[DimRoadType]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the WHERE clause in the SELECT statement that selects the current row among rows with identical business keys."
+                  name="CurrentRowWhere"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether historical attribute updates are directed to the transformation output for changing attribute updates."
+                  name="UpdateChangingAttributeHistory">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when columns with fixed attributes contain changes."
+                  name="FailOnFixedAttributeChange">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the column name for the inferred member."
+                  name="InferredMemberIndicator"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether inferred member updates are detected."
+                  name="EnableInferredMember">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when a lookup of an existing record fails."
+                  name="FailOnLookupFailure">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies that all rows in the input are new or the transformation detects the change type."
+                  name="IncomingRowChangeType"
+                  typeConverter="IncomingRowChangeType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populating data\Slowly Changing Dimension.Connections[LookupConnection]"
+                  connectionManagerID="{FE586EEE-F8D2-4B75-A592-FFE0324433A8}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DDS_DATH]"
+                  description="Defines the connection to use for lookups in the dimension table"
+                  name="LookupConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+                  name="Slowly Changing Dimension Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[AreaName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="AreaName"
+                      cachedSortKeyPosition="3"
+                      externalMetadataColumnId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[AreaType]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[AreaName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[Build_Up_Road]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Build_Up_Road"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[BuiltUpRoad]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[Build_Up_Road]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[RoadTypeName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="RoadTypeName"
+                      cachedSortKeyPosition="4"
+                      externalMetadataColumnId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[RoadType]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadTypeName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[RoadType]"
+                      cachedDataType="i4"
+                      cachedName="RoadType"
+                      externalMetadataColumnId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[RoadTypeNK]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[RoadType]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[SpeedLimit]"
+                      cachedDataType="i4"
+                      cachedName="SpeedLimit"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[SpeedLimit]"
+                      lineageId="Package\Populating data\delete duplicate.Outputs[Sort Output].Columns[SpeedLimit]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">2</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[AreaType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AreaType" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[BuiltUpRoad]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="BuiltUpRoad" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[RoadType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="RoadType" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[RoadTypeNK]"
+                      dataType="i4"
+                      name="RoadTypeNK" />
+                    <externalMetadataColumn
+                      refId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[SpeedLimit]"
+                      dataType="i4"
+                      name="SpeedLimit" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Unchanged Output]"
+                  description="Unchanged rows"
+                  exclusionGroup="1"
+                  name="Unchanged Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[New Output]"
+                  description="New rows"
+                  exclusionGroup="1"
+                  name="New Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Fixed Attribute Output]"
+                  description="Rows with changes in columns tagged FixedAttribute"
+                  exclusionGroup="1"
+                  name="Fixed Attribute Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Changing Attribute Updates Output]"
+                  description="These rows contain new information for ChangingAttribute (Type 1) column changes"
+                  exclusionGroup="1"
+                  name="Changing Attribute Updates Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Historical Attribute Inserts Output]"
+                  description="HistoricalAttribute (Type 2) changes result in these new rows"
+                  exclusionGroup="2"
+                  name="Historical Attribute Inserts Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Populating data\Slowly Changing Dimension.Outputs[Inferred Member Updates Output]"
+                  description="Information to update unpopulated initial dimension row"
+                  exclusionGroup="1"
+                  name="Inferred Member Updates Output"
+                  synchronousInputId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Populating data.Paths[Changing Attribute Updates Output]"
+              endId="Package\Populating data\OLE DB Command.Inputs[OLE DB Command Input]"
+              name="Changing Attribute Updates Output"
+              startId="Package\Populating data\Slowly Changing Dimension.Outputs[Changing Attribute Updates Output]" />
+            <path
+              refId="Package\Populating data.Paths[Lookup Match Output]"
+              endId="Package\Populating data\get area name.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Populating data\get road type name.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Populating data.Paths[Lookup Match Output1]"
+              endId="Package\Populating data\delete duplicate.Inputs[Sort Input]"
+              name="Lookup Match Output"
+              startId="Package\Populating data\get area name.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Populating data.Paths[New Output]"
+              endId="Package\Populating data\Insert Destination.Inputs[OLE DB Destination Input]"
+              name="New Output"
+              startId="Package\Populating data\Slowly Changing Dimension.Outputs[New Output]" />
+            <path
+              refId="Package\Populating data.Paths[OLE DB Source Output]"
+              endId="Package\Populating data\get road type name.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Populating data\NDS Accidents.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Populating data.Paths[Sort Output]"
+              endId="Package\Populating data\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+              name="Sort Output"
+              startId="Package\Populating data\delete duplicate.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update LSET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8FF56384-13B8-4D49-90C2-5B53C39F8870}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update LSET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{DE3C34A7-7A0C-4B26-A05E-3060463C0629}"
+          SQLTask:SqlStatementSource="UPDATE dbo.Data_Flow&#xA;SET LSET = CET&#xA;WHERE Name = 'DDS_RoadType'&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6410A311-8AC0-4C54-B63C-04C24E22D23C}"
+      DTS:From="Package\Get LSET_CET"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Populating data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{E7C71DBA-0169-43E0-AD9E-20DE7353AE2E}"
+      DTS:From="Package\Populating data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update LSET" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Get LSET_CET"
+          TopLeft="55.7142856413004,60.7264704532514" />
+        <NodeLayout
+          Size="153.333333333334,42.6666666666667"
+          Id="Package\Populating data"
+          TopLeft="265.178568416788,60.7647058930776" />
+        <NodeLayout
+          Size="140,42.6666666666667"
+          Id="Package\Update LSET"
+          TopLeft="273.749996814877,157.499998256564" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="202.1142856413,81.9455881731645">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="63.0642827754874,0"
+              Start="0,0"
+              End="55.5642827754874,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="55.5642827754874,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="342.864282615832,103.164705893078">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.3352923634868"
+              Start="0,0"
+              End="0,46.8352923634868">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.8352923634868" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Populating data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="208,41.3333333333334"
+          Id="Package\Populating data\Slowly Changing Dimension"
+          TopLeft="206.7,411.9" />
+        <NodeLayout
+          Size="146.666666666667,41.3333333333334"
+          Id="Package\Populating data\NDS Accidents"
+          TopLeft="237.5,4.85000001162285" />
+        <NodeLayout
+          Size="171.333333333334,41.3333333333334"
+          Id="Package\Populating data\get road type name"
+          TopLeft="225.1,107.1" />
+        <NodeLayout
+          Size="162.666666666667,41.3333333333334"
+          Id="Package\Populating data\Insert Destination"
+          TopLeft="5.50000000000004,513.5" />
+        <NodeLayout
+          Size="147.333333333334,41.3333333333334"
+          Id="Package\Populating data\get area name"
+          TopLeft="237.1,208.7" />
+        <NodeLayout
+          Size="152.666666666667,41.3333333333334"
+          Id="Package\Populating data\delete duplicate"
+          TopLeft="234.3,310.3" />
+        <NodeLayout
+          Size="164.666666666667,41.3333333333334"
+          Id="Package\Populating data\OLE DB Command"
+          TopLeft="389.014288451234,507.382352855378" />
+        <EdgeLayout
+          Id="Package\Populating data.Paths[New Output]"
+          TopLeft="277.366666666667,453.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-190.666666666667,60.0000000000001"
+              Start="0,0"
+              End="-190.666666666667,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2748091603054" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2748091603054"
+                    Point2="0,24.2748091603054"
+                    Point3="-4,24.2748091603054" />
+                  <mssgle:LineSegment
+                    End="-186.666666666667,24.2748091603054" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-186.666666666667,24.2748091603054"
+                    Point2="-190.666666666667,24.2748091603054"
+                    Point3="-190.666666666667,28.2748091603054" />
+                  <mssgle:LineSegment
+                    End="-190.666666666667,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-122.424720052083,29.2748091603054,54.1827734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Populating data.Paths[Lookup Match Output1]"
+          TopLeft="310.7,250.3">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999999"
+              Start="0,0"
+              End="0,52.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Populating data.Paths[Lookup Match Output]"
+          TopLeft="310.7,148.7">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999999"
+              Start="0,0"
+              End="0,52.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Populating data.Paths[Changing Attribute Updates Output]"
+          TopLeft="344.033333333333,453.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="127.3809551179,53.8823528553787"
+              Start="0,0"
+              End="127.3809551179,46.3823528553787">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.7997305445425" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.7997305445425"
+                    Point2="0,21.7997305445425"
+                    Point3="4,21.7997305445425" />
+                  <mssgle:LineSegment
+                    End="123.3809551179,21.7997305445425" />
+                  <mssgle:CubicBezierSegment
+                    Point1="123.3809551179,21.7997305445425"
+                    Point2="127.3809551179,21.7997305445425"
+                    Point3="127.3809551179,25.7997305445425" />
+                  <mssgle:LineSegment
+                    End="127.3809551179,46.3823528553787" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-14.8434286910498,26.7997305445425,157.0678125,11.6630859375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Populating data.Paths[Sort Output]"
+          TopLeft="310.7,351.9">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Populating data.Paths[OLE DB Source Output]"
+          TopLeft="310.8,46.1833333449562">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.9166666550438"
+              Start="0,0"
+              End="0,53.4166666550438">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.4166666550438" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Populating data\Slowly Changing Dimension">
+    <Properties>
+      <Property>
+        <Name>SCDMetadata</Name>
+        <Value
+          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SCDWizardMetadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionID&gt;{FE586EEE-F8D2-4B75-A592-FFE0324433A8}&lt;/ConnectionID&gt;
+  &lt;TableName&gt;[dbo].[DimRoadType]&lt;/TableName&gt;
+  &lt;InputToColumnsCollection&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;delete duplicate.Outputs[Sort Output].Columns[AreaName]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;AreaType&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;delete duplicate.Outputs[Sort Output].Columns[Build_Up_Road]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;BuiltUpRoad&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;delete duplicate.Outputs[Sort Output].Columns[RoadTypeName]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;RoadType&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;delete duplicate.Outputs[Sort Output].Columns[RoadType]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;RoadTypeNK&lt;/ColumnName&gt;
+      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;delete duplicate.Outputs[Sort Output].Columns[SpeedLimit]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;SpeedLimit&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+  &lt;/InputToColumnsCollection&gt;
+  &lt;GeneratedComponentsIdentificationStrings&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
+  &lt;/GeneratedComponentsIdentificationStrings&gt;
+  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
+  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
+  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
+  &lt;CurrentIndicatorColumn /&gt;
+  &lt;InferredIndicatorColumn /&gt;
+  &lt;ValueCurrent /&gt;
+  &lt;ValueExpired /&gt;
+  &lt;StartDateColumn /&gt;
+  &lt;EndDateColumn /&gt;
+  &lt;DateVariable /&gt;
+  &lt;EnableInferredSupport&gt;false&lt;/EnableInferredSupport&gt;
+&lt;/SCDWizardMetadata&gt;</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Populating data\NDS Accidents">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Populating data\get road type name">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[RoadType]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Populating data\get area name">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Area]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

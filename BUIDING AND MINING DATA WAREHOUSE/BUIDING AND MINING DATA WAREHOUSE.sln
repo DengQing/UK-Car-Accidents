@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "BUIDING AND MINING DATA WAREHOUSE", "BUIDING AND MINING DATA WAREHOUSE\BUIDING AND MINING DATA WAREHOUSE.dtproj", "{C4BB1083-F385-49F5-8F40-187899F63D88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4BB1083-F385-49F5-8F40-187899F63D88}.Development|Default.ActiveCfg = Development
+		{C4BB1083-F385-49F5-8F40-187899F63D88}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C098374-38FF-4953-AB5C-0DAB4F7BE331}
+	EndGlobalSection
+EndGlobal

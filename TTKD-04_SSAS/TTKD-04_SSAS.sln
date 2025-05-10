@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "TTKD-04_SSAS", "TTKD-04_SSAS\TTKD-04_SSAS.dwproj", "{EDB7ACBB-5E35-4DE8-B8C0-EE0E86472266}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDB7ACBB-5E35-4DE8-B8C0-EE0E86472266}.Development|Default.ActiveCfg = Development
+		{EDB7ACBB-5E35-4DE8-B8C0-EE0E86472266}.Development|Default.Build.0 = Development
+		{EDB7ACBB-5E35-4DE8-B8C0-EE0E86472266}.Development|Default.Deploy.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BF43877-C346-4F22-A316-220C90CCE44E}
+	EndGlobalSection
+EndGlobal
